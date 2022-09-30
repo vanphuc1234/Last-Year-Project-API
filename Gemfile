@@ -12,6 +12,12 @@ gem 'puma', '~> 5.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+ 
+gem 'grape'
+gem 'grape_on_rails_routes'
+gem 'grape-entity'
+gem 'grape-swagger-rails'
+gem 'grape-swagger'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
