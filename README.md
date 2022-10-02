@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. rake db:migrate
+2. Vô rails c chạy: `Product.generate_data`
 
-Things you may want to cover:
+/authentications/
 
-* Ruby version
+1. login_by_google
+2. login_by_username
 
-* System dependencies
+/products/
 
-* Configuration
+1. list
+2. products/:id
 
-* Database creation
+/profiles/
 
-* Database initialization
+1. /:slug
+2. me
 
-* How to run the test suite
+/searchs/
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. overviews
+2. autocompletes
+3. searchs
