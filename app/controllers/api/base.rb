@@ -8,5 +8,9 @@ module API
     prefix :api
 
     mount API::V1::Base
+
+    add_swagger_documentation(
+      mount_path: '/swagger_doc'
+    )
   end
 end
