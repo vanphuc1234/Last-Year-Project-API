@@ -5,7 +5,14 @@ module API
       resource :products do
         desc 'Return all products.'
         get do
-          Product.all
+          products = Product.paginate(page: params[:page])
+          {
+            total_count: products.total_entries,
+            total_pages: products.total_pages,
+            page: products.current_page,
+            per_page: products.per_page,
+            results: products
+          }
         end
       end
 
