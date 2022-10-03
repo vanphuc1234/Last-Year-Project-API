@@ -8,10 +8,7 @@ class Product < ApplicationRecord
         title: Faker::Address.full_address, 
         description: Faker::Address.full_address, 
         price: rand(1000000..5000000),
-        area: rand(50..100),
-        direction: ['huong_dong', 'huong_tay'].sample,
-        beds_count: rand(1..10),
-        baths_count: rand(1..10)
+        area: rand(50..100)
       )
     end
   end
