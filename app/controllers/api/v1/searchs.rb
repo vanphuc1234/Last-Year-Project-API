@@ -58,6 +58,23 @@ module API
             products = products.where('price <= :max_price', {max_price: params[:max_price]})
           end
 
+          if params[:min_area].present? && params[:max_area].present?
+            products = products.where('area >= :min_area AND area <= :max_area', {min_area: params[:min_area], max_area: params[:max_area] })
+          end
+
+          if params[:direction].present?
+            products = products.where(direction: params[:direction])
+          end
+
+          if params[:beds_count].present?
+            products = products.where('beds_count = :beds_count', {beds_count: params[:beds_count]})
+          end
+
+          if params[:baths_count].present?
+            products = products.where('baths_count = :baths_count', {baths_count: params[:baths_count]})
+          end
+          
+
           products = products.paginate(page: params[:page], per_page: params[:per_page]).order(order_by_hash)
 
           {
