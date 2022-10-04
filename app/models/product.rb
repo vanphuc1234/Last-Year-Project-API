@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-
+  
   def self.generate_data
     50.times do |index|
       Product.create(
@@ -16,7 +16,7 @@ class Product < ApplicationRecord
       )
     end
   end
-
+  
   def self.fake_aggs
     {
       "category_types": [

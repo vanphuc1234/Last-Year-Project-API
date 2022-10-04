@@ -1,7 +1,9 @@
 module API
   module V1
     class Products < Grape::API
-      
+      helpers API::V1::Helpers::APIHelpers
+      helpers API::V1::Helpers::ProductAPIHelpers
+
       resource :products do
         desc 'Lấy danh sách sản phẩm theo ids'
         
@@ -10,12 +12,8 @@ module API
         end
 
         get '/list' do
-          order_by_hash = {}
-          sort_by = params[:sort_by] || 'id'
-          sort_order = params[:sort_order] || 'desc'
-          order_by_hash[sort_by] = sort_order
           ids = params[:product_ids].to_s.split(',')
-          products = Product.where(id: ids).paginate(page: params[:page], per_page: params[:per_page]).order(order_by_hash)
+          products = Product.where(id: ids).paginate(page: page, per_page: per_page).order(order_by_hash)
           {
             total_count: products.total_entries,
             total_pages: products.total_pages,
@@ -35,12 +33,8 @@ module API
         end
 
         get do
-          order_by_hash = {}
-          sort_by = params[:sort_by] || 'id'
-          sort_order = params[:sort_order] || 'desc'
-          order_by_hash[sort_by] = sort_order
-          
-          products = Product.paginate(page: params[:page], per_page: params[:per_page]).order(order_by_hash)
+          test_product_helper
+          products = Product.paginate(page: page, per_page: per_page).order(order_by_hash)
           {
             total_count: products.total_entries,
             total_pages: products.total_pages,
@@ -54,8 +48,13 @@ module API
         params do
         end
 
+        # services modules
+        # helpers x
+        # presenters (decorators) x
+        # serialize (marshal) | deserialize (unmarshal) v (entity = serializer) x
         get ":id" do
-          Product.find(params[:id])
+          product = Product.find(params[:id])
+          ProductEntity.new(product)
         end
 
 
