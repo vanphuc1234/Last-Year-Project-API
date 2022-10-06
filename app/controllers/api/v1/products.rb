@@ -6,7 +6,7 @@ module API
 
       resource :products do
         desc 'Lấy danh sách sản phẩm theo ids'
-        
+
         params do
           optional :product_ids, type: String, description: 'Danh sách product id phân cách bằng dấu ,'
         end
