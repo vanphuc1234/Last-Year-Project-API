@@ -53,9 +53,9 @@ module API
         end
 
         get :me do
-          user = User.find_by(api_token: headers['Authorization'])
+          user = User.find_by(api_token: params[:api_token])
           if user.present?
-            { success: true, data: ProfileEntity.new(user) }
+            { success: true, data: user }
           else
             { success: false, code: 401,message: 'API token không tồn tại' }
           end
