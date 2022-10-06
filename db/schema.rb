@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_06_161059) do
+ActiveRecord::Schema.define(version: 2022_10_06_164406) do
 
   create_table "products", force: :cascade do |t|
     t.string "title"
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 2022_10_06_161059) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "username"
     t.string "password"
+    t.string "api_token"
+    t.index ["api_token"], name: "index_users_on_api_token"
+    t.index ["username", "password"], name: "index_users_on_username_and_password"
   end
 
 end

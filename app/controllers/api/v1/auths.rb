@@ -17,7 +17,7 @@ module API
           if (params[:password].to_s.length < 6) 
             return { status: false, message: "Password phải hơn 6 kí tự" }
           end
-          
+
           password = Digest::MD5.hexdigest(params[:password])
           user = User.create(
             username: params[:username], 
@@ -29,6 +29,35 @@ module API
             { status: true, data: user }
           else
             { status: false, message: user.errors.full_messages.to_sentence}
+          end
+        end
+
+        desc 'Đăng nhập tài khoản'
+        params do
+          requires :username, type: String, description: 'Username'
+          requires :password, type: String, description: 'Password'
+        end
+
+        post :login do
+          password = Digest::MD5.hexdigest(params[:password])
+          user = User.find_by(username: params[:username], password: password)
+          if user.present?
+            { success: true, api_token: user.api_token }
+          else
+            { success: false, message: 'Username hoặc password không đúng.' }
+          end
+        end
+
+        desc 'Thông tin của user đang đăng nhập' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+
+        get :me do
+          user = User.find_by(api_token: headers['Authorization'])
+          if user.present?
+            { success: true, data: ProfileEntity.new(user) }
+          else
+            { success: false, code: 401,message: 'API token không tồn tại' }
           end
         end
 
