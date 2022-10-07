@@ -53,7 +53,7 @@ module API
         end
 
         get :me do
-          user = User.find_by(api_token: headers['Authorization'])
+          user = User.find_by(api_token: test)
           if user.present?
             { success: true, data: user }
           else
