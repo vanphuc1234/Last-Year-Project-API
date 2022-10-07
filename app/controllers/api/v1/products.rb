@@ -55,7 +55,7 @@ module API
           # requires :api_token, type: String, description: 'api token'
         end
 
-        post :add_product do   
+        post do   
                    
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)
@@ -73,6 +73,57 @@ module API
           else
             { status: false, message: product.errors.full_messages.to_sentence}
           end
+        end
+
+        desc 'Cập nhật sản phẩm' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          requires :id, type: Integer, description: 'Product id'
+          optional :title, type: String, description: 'Tiêu đề'
+          optional :description, type: String, description: 'Mô tả'
+          optional :price, type: Float, description: 'Giá'
+          optional :area, type: Float, description: 'Diện tích'
+          optional :business_type, type: String, description: 'Loại BĐS'
+          
+        end
+
+        put ":id" do    
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+            product = Product.find(params[:id])
+            if(product.valid?)
+
+              product.update(title: params[:title],description: params[:description],price: params[:price],area: params[:area],business_type: params[:business_type])
+
+            end
+          end
+         
+          { status: true, product: product, owner: user}
+          
+        end
+
+        desc 'Xóa sản phẩm' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          requires :id, type: Integer, description: 'Id sản phẩm sẽ xóa'
+          
+        end
+
+        delete do   
+                   
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+           product = Product.find(params[:id])
+           if(product.valid?)
+            product.destroy
+           end
+          end
+
+          
+          { status: true, message: 'Xóa product thành công'}
+          
         end
 
 
