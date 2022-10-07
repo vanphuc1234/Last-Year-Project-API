@@ -9,8 +9,18 @@ class ProductPresenter < BasePresenter
   end
 
   def formatted_price
-    ntrieu = (price / 1000000).round(1)
-    "#{ntrieu} triệu"
+    if (price >= 1000000 && price < 1000000000 ) 
+      ntrieu = (price / 1000000).round(1)
+      "#{ntrieu} triệu"
+    elsif (price < 1000000)
+      ntnghin = (price / 100000).round(1)
+      "#{ntnghin} trăm nghìn"
+    elsif (price >= 1000000000)
+      nty = (price / 1000000000).round(1)
+      "#{nty} tỷ"
+    # else
+    #   price
+    end
   end
 
   def formatted_area

@@ -42,7 +42,7 @@ module API
           password = Digest::MD5.hexdigest(params[:password])
           user = User.find_by(username: params[:username], password: password)
           if user.present?
-            { success: true, api_token: user.api_token }
+            { success: true,  user: user }
           else
             { success: false, message: 'Username hoặc password không đúng.' }
           end
@@ -53,11 +53,11 @@ module API
         end
 
         get :me do
-          user = User.find_by(api_token: params[:api_token])
+          user = User.find_by(api_token: headers['Authorization'])
           if user.present?
             { success: true, data: user }
           else
-            { success: false, code: 401,message: 'API token không tồn tại' }
+            { success: false, code: 401, message: 'API token không tồn tại' }
           end
         end
 
