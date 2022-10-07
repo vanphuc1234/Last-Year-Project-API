@@ -3,6 +3,15 @@ module API::V1::Helpers::APIHelpers
   
   DEFAULT_PER_PAGE = 15
 
+  def self.user_auth
+    {
+      'Authorization': {
+        description: 'Access token',
+        required: false
+      }
+    }
+  end
+
   def page
     params[:page].to_i > 0 ? params[:page].to_i : 1
   end
