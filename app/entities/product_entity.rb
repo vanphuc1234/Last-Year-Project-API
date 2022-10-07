@@ -13,7 +13,7 @@ class ProductEntity < Grape::Entity
   end
 
   expose :formatted_area do |object|
-    ProductPresenter.new(object).formatted_price
+    ProductPresenter.new(object).formatted_area
   end
 
   with_options(format_with: :iso_timestamp) do

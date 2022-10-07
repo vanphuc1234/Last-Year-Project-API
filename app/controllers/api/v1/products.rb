@@ -44,6 +44,38 @@ module API
           }
         end
 
+        desc 'Đăng sản phẩm' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          requires :title, type: String, description: 'Tiêu đề'
+          requires :description, type: String, description: 'Mô tả'
+          requires :price, type: Float, description: 'Giá'
+          requires :area, type: Float, description: 'Diện tích'
+          # requires :api_token, type: String, description: 'api token'
+        end
+
+        post :add_product do   
+                   
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+            product = Product.create(
+              title: params[:title], 
+              description: params[:description], 
+              price: params[:price],
+              area: params[:area],
+              user_id: user.id
+            )
+          end
+
+          if (product.valid?)
+            { status: true, product: product, owner: user}
+          else
+            { status: false, message: product.errors.full_messages.to_sentence}
+          end
+        end
+
+
         desc 'Xem chi tiết sản phẩm'
         params do
         end
