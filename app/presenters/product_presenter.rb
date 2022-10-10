@@ -4,6 +4,15 @@ class ProductPresenter < BasePresenter
     sell: "Bán"
   }.with_indifferent_access
 
+  CATEGORY_TYPES = {
+    nha_rieng: 'Nhà riêng', 
+    can_ho_chung_cu: "Căn hộ chung cư"
+  }.with_indifferent_access
+
+  def formatted_category_type
+    CATEGORY_TYPES[category_type] || 'N/A'
+  end
+
   def formatted_business_type
     BUSINESS_TYPES[business_type] || 'N/A'
   end
@@ -41,7 +50,8 @@ class ProductPresenter < BasePresenter
   end
 
   def full_address
-    "#{street}, #{ward}, #{district}, #{city}"
+    address = [street, ward, district, city]
+    address.join(', ')
   end
 
   def listing_location_name
@@ -81,6 +91,24 @@ class ProductPresenter < BasePresenter
   def slug 
     title.parameterize
   end 
+
+  def detail_props
+    detail_props = []
+    if(business_type!= nil && category_type != nil)
+      loai_tin_dang = {
+        "label": "Loại tin đăng",
+        "value": "#{formatted_business_type} #{formatted_category_type.downcase}"
+      }
+      detail_props.push(loai_tin_dang)
+    end
+    
+      dia_chi = {
+        "label": "Địa chỉ",
+        "value": full_address
+      }
+      detail_props.push(dia_chi)
+   
+  end
 
 
 end
