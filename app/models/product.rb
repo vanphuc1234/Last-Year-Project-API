@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   belongs_to :user
   
   def self.generate_data
-    50.times do |index|
+    10.times do |index|
       Product.create(
         user_id: User.order('random()').first.try(:id),
         business_type: ['sell', 'rent'].sample,

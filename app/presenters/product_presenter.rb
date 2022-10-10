@@ -4,6 +4,15 @@ class ProductPresenter < BasePresenter
     sell: "Bán"
   }.with_indifferent_access
 
+  CATEGORY_TYPES = {
+    nha_rieng: 'Nhà riêng', 
+    can_ho_chung_cu: "Căn hộ chung cư"
+  }.with_indifferent_access
+
+  def formatted_category_type
+    CATEGORY_TYPES[category_type] || 'N/A'
+  end
+
   def formatted_business_type
     BUSINESS_TYPES[business_type] || 'N/A'
   end
@@ -14,13 +23,13 @@ class ProductPresenter < BasePresenter
         ntrieu = (price / 1000000).round(1)
         "#{ntrieu} triệu"
       elsif (price < 1000000)
-        ntnghin = (price / 100000).round(1)
-        "#{ntnghin} trăm nghìn"
+        ntnghin = (price / 1000).round(1)
+        "#{ntnghin} nghìn"
       elsif (price >= 1000000000)
         nty = (price / 1000000000).round(1)
         "#{nty} tỷ"
       else
-        price
+       "#{price} đồng"
       end
     end
     
@@ -38,10 +47,6 @@ class ProductPresenter < BasePresenter
 
     "#{price_per_m2.round(1)} nghìn/m2"
     end
-  end
-
-  def full_address
-    "#{street}, #{ward}, #{district}, #{city}"
   end
 
   def listing_location_name
@@ -81,6 +86,44 @@ class ProductPresenter < BasePresenter
   def slug 
     title.parameterize
   end 
+
+  def full_address
+    address = []
+    if(street != nil)
+      address.push(street)
+    end
+    if(ward != nil)
+      address.push(ward)
+    end
+    if(district != nil)
+      address.push(district)
+    end
+    if(city != nil)
+      address.push(city)
+    end
+    
+    address.join(', ')
+  end
+
+  def detail_props
+    detail_props = []
+
+    if(business_type!= nil && category_type != nil)
+      loai_tin_dang = {
+        "label": "Loại tin đăng",
+        "value": "#{formatted_business_type} #{formatted_category_type.downcase}"
+      }
+      detail_props.push(loai_tin_dang)
+    end
+    if(street != nil || ward != nil || district != nil || city != nil)
+      dia_chi = {
+       "label": "Địa chỉ",
+        "value": full_address
+      }
+      detail_props.push(dia_chi)
+    end
+    detail_props   
+  end
 
 
 end

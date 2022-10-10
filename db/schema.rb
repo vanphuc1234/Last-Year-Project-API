@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_091201) do
+ActiveRecord::Schema.define(version: 2022_10_10_162459) do
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.integer "author_id"
+    t.datetime "published_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "book_name"
+    t.index ["author_id"], name: "index_books_on_author_id"
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "title"
@@ -43,7 +58,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_091201) do
     t.string "password"
     t.string "api_token"
     t.string "job_title"
-    t.integer "phone"
+    t.string "phone"
     t.string "sex"
     t.string "experience_year"
     t.string "description"

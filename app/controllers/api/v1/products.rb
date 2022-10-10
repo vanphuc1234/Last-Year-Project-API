@@ -14,13 +14,15 @@ module API
         get '/list' do
           ids = params[:product_ids].to_s.split(',')
           products = Product.where(id: ids).paginate(page: page, per_page: per_page).order(order_by_hash)
-          {
+          data = {
             total_count: products.total_entries,
             total_pages: products.total_pages,
             page: products.current_page,
             per_page: products.per_page,
             results: products
           }
+
+          {status: true, code: 200, data: data}
         end
         
         desc 'Danh sách sản phẩm'
@@ -35,13 +37,15 @@ module API
         get do
           test_product_helper
           products = Product.paginate(page: page, per_page: per_page).order(order_by_hash)
-          {
+          data = {
             total_count: products.total_entries,
             total_pages: products.total_pages,
             page: products.current_page,
             per_page: products.per_page,
             results: products
           }
+
+          {status: true, code: 200, data: data}
         end
 
         desc 'Đăng sản phẩm' do
@@ -63,11 +67,10 @@ module API
           optional :baths_count, type: Integer, description: 'Số nhà tắm'
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
-          # requires :api_token, type: String, description: 'api token'
+        
         end
 
-        post do   
-                   
+        post do                     
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)
             product = Product.create(
@@ -91,10 +94,7 @@ module API
             return { status: true, code: 200, data: ProductEntity.new(product)}
           else
             return { status: false, code: 404, message: "User không tồn tại"}
-          end
-          
-
-          
+          end     
         end
 
         desc 'Cập nhật sản phẩm' do
@@ -124,9 +124,10 @@ module API
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)
             product = Product.find(params[:id])
-            if(product.valid?)
 
-              product.update(title: params[:title],
+            if(product.valid?)
+              product.update(
+                title: params[:title],
                 description: params[:description],
                 price: params[:price],
                 area: params[:area],
@@ -143,22 +144,19 @@ module API
                 floor_count: params[:floor_count]
               )
                return { status: true, code: 200, data: ProductEntity.new(product)}
+            else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
             end
 
             else
               return { status: false, code: 404, message: "User không tồn tại"}
           end
-        
-         
-
-          
         end
 
         desc 'Xóa sản phẩm' do
           headers API::V1::Helpers::APIHelpers.user_auth
         end
         params do
-          requires :id, type: Integer, description: 'Id sản phẩm sẽ xóa'
+          requires :id, type: Integer, description: "Id sản phẩm sẽ xóa"
           
         end
 
@@ -169,11 +167,14 @@ module API
            product = Product.find(params[:id])
            if(product.valid?)
             product.destroy
+            return { status: true, code: 200, message: "Xóa product thành công"}
+           else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
            end
+          else return { status: false, code: 400, message: "Người dùng không tồn tại"}
           end
 
           
-          { status: true, message: 'Xóa product thành công'}
+          
           
         end
 
@@ -188,7 +189,7 @@ module API
         # serialize (marshal) | deserialize (unmarshal) v (entity = serializer) x
         get ":id" do
           product = Product.find(params[:id])
-          user = Product.find(params[:id]).user
+        
           if product.present?
             { status: true, code: 200, data: ProductEntity.new(product)}
           else
