@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_091201) do
+ActiveRecord::Schema.define(version: 2022_10_10_162459) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_091201) do
     t.string "password"
     t.string "api_token"
     t.string "job_title"
-    t.integer "phone"
+    t.string "phone"
     t.string "sex"
     t.string "experience_year"
     t.string "description"

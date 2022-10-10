@@ -37,13 +37,8 @@ class ProductEntity < Grape::Entity
   expose :detail_props do |object|
     ProductPresenter.new(object).detail_props
   end
-  
-  
-  expose :category_type do |object|
-    object.category_type || 'N/A'
-  end
-  expose :owner do |object|
-  
+
+  expose :owner do |object|  
     user = User.find(object.user_id)
 
     ProfileEntity.new(user)

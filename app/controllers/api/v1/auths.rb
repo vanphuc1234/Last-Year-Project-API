@@ -26,9 +26,9 @@ module API
           )
 
           if user.valid?
-            { status: true, data: user }
+            { status: true, code:200, data: user }
           else
-            { status: false, message: user.errors.full_messages.to_sentence}
+            { status: false, code:400, message: user.errors.full_messages.to_sentence}
           end
         end
 
@@ -40,7 +40,7 @@ module API
           optional :full_name, type: String, description: 'Họ và tên'
           optional :avatar_url, type: String, description: 'Ảnh đại diện'
           optional :job_title, type: String, description: 'Chức danh'
-          optional :phone, type: Integer, description: 'Số điện thoại'
+          optional :phone, type: String, description: 'Số điện thoại'
           optional :sex, type: String, description: 'Giới tính'
           optional :experience_year, type: String, description: 'Số năm kinh nghiệm'
           optional :description, type: String, description: 'Giới thiệu về bạn'
@@ -51,23 +51,21 @@ module API
 
         put do    
           user = User.find_by(api_token: headers['Authorization'])
-          if(user.present?)
-            
-
-              user.update(
-                type_user: params[:type_user],
-                full_name: params[:full_name],
-                avatar_url: params[:avatar_url],
-                job_title: params[:job_title],
-                phone: params[:phone],
-                sex: params[:sex],
-                experience_year: params[:experience_year],
-                description: params[:description],
-                address: params[:address],
-              )
-               return { status: true, code: 200, data: ProfileEntity.new(user)}
-            else
-              return { status: false, code: 404, message: "User không tồn tại"}
+          if(user.present?)  
+            user.update(
+              type_user: params[:type_user],
+              full_name: params[:full_name],
+              avatar_url: params[:avatar_url],
+              job_title: params[:job_title],
+              phone: params[:phone],
+              sex: params[:sex],
+              experience_year: params[:experience_year],
+              description: params[:description],
+              address: params[:address],
+            )
+            return { status: true, code: 200, data: ProfileEntity.new(user)}
+          else
+            return { status: false, code: 404, message: "User không tồn tại"}
           end
         end
 
@@ -81,9 +79,9 @@ module API
           password = Digest::MD5.hexdigest(params[:password])
           user = User.find_by(username: params[:username], password: password)
           if user.present?
-            { success: true,  user: user }
+            { status: true, code: 200,  user: user }
           else
-            { success: false, message: 'Username hoặc password không đúng.' }
+            { status: false, code: 400, message: "Username hoặc password không đúng." }
           end
         end
 
@@ -96,7 +94,7 @@ module API
           if user.present?
             { status: true, code: 200, data: ProfileEntity.new(user) }
           else
-            { status: false, code: 401, message: 'API token không tồn tại' }
+            { status: false, code: 401, message: "API token không tồn tại" }
           end
         end
 
