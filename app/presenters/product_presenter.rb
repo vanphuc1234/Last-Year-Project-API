@@ -26,4 +26,16 @@ class ProductPresenter < BasePresenter
   def formatted_area
     "#{area.round(0)} m2"
   end
+
+  def formatted_price_per_m2
+    price_per_m2 = (price/1000)/area
+
+    "#{price_per_m2.round(1)} nghìn/m2"
+  end
+
+  def full_address
+    "#{street}, #{ward}, #{district}, #{city}"
+  end
+
+
 end

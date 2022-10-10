@@ -137,7 +137,14 @@ module API
         # serialize (marshal) | deserialize (unmarshal) v (entity = serializer) x
         get ":id" do
           product = Product.find(params[:id])
-          ProductEntity.new(product)
+          user = Product.find(params[:id]).user
+          if product.present?
+            { status: true, code: 200, data: ProductEntity.new(product)}
+          else
+            { status: false, code: 404, message: product.errors.full_messages.to_sentence}
+          end
+
+          
         end
 
 
