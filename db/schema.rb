@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_06_164406) do
+ActiveRecord::Schema.define(version: 2022_10_10_054416) do
 
   create_table "products", force: :cascade do |t|
     t.string "title"
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 2022_10_06_164406) do
     t.string "direction"
     t.integer "beds_count"
     t.integer "baths_count"
+    t.string "city"
+    t.string "district"
+    t.string "ward"
+    t.string "street"
+    t.integer "facade"
+    t.integer "floor_count"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
@@ -36,6 +42,10 @@ ActiveRecord::Schema.define(version: 2022_10_06_164406) do
     t.string "username"
     t.string "password"
     t.string "api_token"
+    t.string "job_title"
+    t.integer "phone"
+    t.string "sex"
+    t.string "experience_year"
     t.index ["api_token"], name: "index_users_on_api_token"
     t.index ["username", "password"], name: "index_users_on_username_and_password"
   end

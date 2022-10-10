@@ -11,10 +11,17 @@ class Product < ApplicationRecord
         description: Faker::Address.full_address, 
         price: rand(1000000..5000000),
         area: rand(50..100),
-        area: rand(50..100),
         direction: ['huong_dong', 'huong_tay'].sample,
         beds_count: rand(1..10),
-        baths_count: rand(1..10)
+        baths_count: rand(1..10),
+        city: "HỒ CHÍ MINH",
+        district: "Quận 12",
+        ward: "Phường Hiệp Thành",
+        street: "Đường HT13",
+        facade: rand(1..100),
+        floor_count: rand(1..5)
+        
+
       )
     end
   end
