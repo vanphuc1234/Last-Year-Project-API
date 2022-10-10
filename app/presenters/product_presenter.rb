@@ -9,28 +9,35 @@ class ProductPresenter < BasePresenter
   end
 
   def formatted_price
-    if (price >= 1000000 && price < 1000000000 ) 
-      ntrieu = (price / 1000000).round(1)
-      "#{ntrieu} triệu"
-    elsif (price < 1000000)
-      ntnghin = (price / 100000).round(1)
-      "#{ntnghin} trăm nghìn"
-    elsif (price >= 1000000000)
-      nty = (price / 1000000000).round(1)
-      "#{nty} tỷ"
-    # else
-    #   price
+    if price != nil 
+      if (price >= 1000000 && price < 1000000000 ) 
+        ntrieu = (price / 1000000).round(1)
+        "#{ntrieu} triệu"
+      elsif (price < 1000000)
+        ntnghin = (price / 100000).round(1)
+        "#{ntnghin} trăm nghìn"
+      elsif (price >= 1000000000)
+        nty = (price / 1000000000).round(1)
+        "#{nty} tỷ"
+      else
+        price
+      end
     end
+    
   end
 
   def formatted_area
+    if area != nil
     "#{area.round(0)} m2"
+    end
   end
 
   def formatted_price_per_m2
+    if price != nil && area != nil
     price_per_m2 = (price/1000)/area
 
     "#{price_per_m2.round(1)} nghìn/m2"
+    end
   end
 
   def full_address
