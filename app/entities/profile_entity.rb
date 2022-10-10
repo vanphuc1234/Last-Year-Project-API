@@ -16,6 +16,10 @@ class ProfileEntity < Grape::Entity
     ProfilePresenter.new(object).posts_count
   end
   expose :description
+  expose :address
+  expose :formatted_badges do |object|
+    nil
+  end 
   expose :formatted_joined_at do |object|
     "Đã tham gia hơn 1 tháng trước"
   end 
