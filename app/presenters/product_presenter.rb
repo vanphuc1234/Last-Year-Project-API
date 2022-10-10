@@ -45,7 +45,16 @@ class ProductPresenter < BasePresenter
   end
 
   def listing_location_name
-    "#{district}, #{city}"
+    if district != nil && city == nil
+      district
+    elsif city != nil && district == nil
+      city
+    elsif city != nil && district != nil
+      "#{district}, #{city}"
+    else
+        nil
+    end
+    
   end
 
 
