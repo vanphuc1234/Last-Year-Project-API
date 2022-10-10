@@ -37,5 +37,34 @@ class ProductPresenter < BasePresenter
     "#{street}, #{ward}, #{district}, #{city}"
   end
 
+  def listing_location_name
+    "#{district}, #{city}"
+  end
+
+
+  def props
+    props = []
+    if floor_count != nil 
+      props.push("#{floor_count} tầng")
+    end
+    if beds_count != nil
+      props.push("#{beds_count} pn")
+    end
+    if baths_count != nil
+      props.push("#{baths_count} wc")
+    end
+    if facade != nil
+      props.push("Mặt tiền #{facade} m")
+    end
+    if direction != nil
+      props.push(direction)
+    end
+    props    
+  end
+
+  def slug 
+    title.parameterize
+  end 
+
 
 end
