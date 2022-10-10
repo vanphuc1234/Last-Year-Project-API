@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_084603) do
+ActiveRecord::Schema.define(version: 2022_10_10_091201) do
 
   create_table "products", force: :cascade do |t|
     t.string "title"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_084603) do
     t.string "experience_year"
     t.string "description"
     t.string "address"
+    t.string "type_user"
     t.index ["api_token"], name: "index_users_on_api_token"
     t.index ["username", "password"], name: "index_users_on_username_and_password"
   end

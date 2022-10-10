@@ -32,6 +32,45 @@ module API
           end
         end
 
+        desc 'Cập nhật tài khoản' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          optional :type_user, type: String, description: 'Bạn là'
+          optional :full_name, type: String, description: 'Họ và tên'
+          optional :avatar_url, type: String, description: 'Ảnh đại diện'
+          optional :job_title, type: String, description: 'Chức danh'
+          optional :phone, type: Integer, description: 'Số điện thoại'
+          optional :sex, type: String, description: 'Giới tính'
+          optional :experience_year, type: String, description: 'Số năm kinh nghiệm'
+          optional :description, type: String, description: 'Giới thiệu về bạn'
+          optional :address, type: String, description: 'Nơi làm việc'
+          
+          
+        end
+
+        put do    
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+            
+
+              user.update(
+                type_user: params[:type_user],
+                full_name: params[:full_name],
+                avatar_url: params[:avatar_url],
+                job_title: params[:job_title],
+                phone: params[:phone],
+                sex: params[:sex],
+                experience_year: params[:experience_year],
+                description: params[:description],
+                address: params[:address],
+              )
+               return { status: true, code: 200, data: ProfileEntity.new(user)}
+            else
+              return { status: false, code: 404, message: "User không tồn tại"}
+          end
+        end
+
         desc 'Đăng nhập tài khoản'
         params do
           requires :username, type: String, description: 'Username'

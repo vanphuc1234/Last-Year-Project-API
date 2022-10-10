@@ -6,11 +6,11 @@ class ProfilePresenter < BasePresenter
   
   def profile_tag     
     profile_tag = []
-    if job_title != nil 
-    profile_tag.push(job_title)
+    if type_user != nil 
+    profile_tag.push(type_user)
     end
     if experience_year != nil
-    profile_tag.push(experience_year)
+    profile_tag.push("#{experience_year} năm kinh nghiệm")
     end
     profile_tag    
    end
