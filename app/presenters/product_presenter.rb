@@ -23,7 +23,7 @@ class ProductPresenter < BasePresenter
         ntrieu = (price / 1000000).round(1)
         "#{ntrieu} triệu"
       elsif (price < 1000000)
-        ntnghin = (price / 100000).round(1)
+        ntnghin = (price / 1000).round(1)
         "#{ntnghin} nghìn"
       elsif (price >= 1000000000)
         nty = (price / 1000000000).round(1)
