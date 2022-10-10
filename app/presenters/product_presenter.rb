@@ -84,7 +84,9 @@ class ProductPresenter < BasePresenter
   end
 
   def slug 
-    title.parameterize
+    if(title != nil)
+      title.parameterize
+    end
   end 
 
   def full_address
