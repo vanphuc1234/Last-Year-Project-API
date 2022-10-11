@@ -2,19 +2,19 @@ class Product < ApplicationRecord
   belongs_to :user
   
   def self.generate_data
-    10.times do |index|
+    50.times do |index|
       Product.create(
         user_id: User.order('random()').first.try(:id),
         business_type: ['sell', 'rent'].sample,
-        category_type: ['can_ho_chung_cu', 'nha_rieng'].sample,
+        category_type: ['can_ho_chung_cu', 'nha_rieng',"nha_mat_pho","biet_thu_lien_ke","dat_nen_du_an","dat","trang_trai_khu_nghi_duong","nha_tro_phong_tro","van_phong","cua_hang_kiot","kho_nha_xuong","bat_dong_san_khac"].sample,
         title: Faker::Address.full_address, 
         description: Faker::Address.full_address, 
-        price: rand(1000000..5000000),
-        area: rand(50..100),
+        price: rand(1000000..100000000000),
+        area: rand(20..250),
         direction: ['huong_dong', 'huong_tay'].sample,
         beds_count: rand(1..10),
         baths_count: rand(1..10),
-        city: "HỒ CHÍ MINH",
+        city: "Hồ Chí Minh",
         district: "Quận 12",
         ward: "Phường Hiệp Thành",
         street: "Đường HT13",

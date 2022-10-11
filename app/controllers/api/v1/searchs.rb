@@ -50,13 +50,15 @@ module API
             products = products.where(category_type: params[:category_type])
           end
 
-          if params[:min_price].present?
-            products = products.where('price >= :min_price', {min_price: params[:min_price]})
+          if(params[:price_unit].present? && params[:min_price].present? && params[:max_price].present?)
+            if(params[:price_unit] == "trieu")            
+              products = products.where('price >= :min_price AND price <= :max_price', {min_price: params[:min_price]*1000000, max_price: params[:max_price]*1000000})
+          
+            elsif(params[:price_unit] == "ty")
+              products = products.where('price >= :min_price AND price <= :max_price', {min_price: params[:min_price]*1000000000, max_price: params[:max_price]*1000000000})
+            end
           end
-
-          if params[:max_price].present?
-            products = products.where('price <= :max_price', {max_price: params[:max_price]})
-          end
+          
 
           if params[:min_area].present? && params[:max_area].present?
             products = products.where('area >= :min_area AND area <= :max_area', {min_area: params[:min_area], max_area: params[:max_area] })
