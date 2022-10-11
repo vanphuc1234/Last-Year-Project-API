@@ -12,7 +12,7 @@ module API
           Product.where("title like ?", "%#{params[:keyword]}%").limit(10)
         end
         
-        desc 'Search products'
+        desc 'Danh sách sản phẩm'
         params do
           optional :business_type, type: String
           optional :category_type, type: String

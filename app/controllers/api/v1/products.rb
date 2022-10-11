@@ -25,28 +25,28 @@ module API
           {status: true, code: 200, data: data}
         end
         
-        desc 'Danh sách sản phẩm'
+        # desc 'Danh sách sản phẩm'
 
-        params do
-          optional :page, type: Integer, description: 'Số trang'
-          optional :per_page, type: Integer, description: 'Số dòng trên trang'
-          optional :sort_by, type: String, values: ['id']
-          optional :sort_order, type: String, values: ['asc', 'desc']
-        end
+        # params do
+        #   optional :page, type: Integer, description: 'Số trang'
+        #   optional :per_page, type: Integer, description: 'Số dòng trên trang'
+        #   optional :sort_by, type: String, values: ['id']
+        #   optional :sort_order, type: String, values: ['asc', 'desc']
+        # end
 
-        get do
-          test_product_helper
-          products = Product.paginate(page: page, per_page: per_page).order(order_by_hash)
-          data = {
-            total_count: products.total_entries,
-            total_pages: products.total_pages,
-            page: products.current_page,
-            per_page: products.per_page,
-            results: products
-          }
+        # get do
+        #   test_product_helper
+        #   products = Product.paginate(page: page, per_page: per_page).order(order_by_hash)
+        #   data = {
+        #     total_count: products.total_entries,
+        #     total_pages: products.total_pages,
+        #     page: products.current_page,
+        #     per_page: products.per_page,
+        #     results: products
+        #   }
 
-          {status: true, code: 200, data: data}
-        end
+        #   {status: true, code: 200, data: data}
+        # end
 
         desc 'Đăng sản phẩm' do
           headers API::V1::Helpers::APIHelpers.user_auth

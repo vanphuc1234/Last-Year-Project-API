@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_162459) do
+ActiveRecord::Schema.define(version: 2022_10_11_144922) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2022_10_10_162459) do
     t.string "street"
     t.integer "facade"
     t.integer "floor_count"
+    t.string "image_url"
+    t.integer "images_count"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
