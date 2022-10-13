@@ -32,6 +32,21 @@ class ProductEntity < Grape::Entity
     "Hôm nay"
   end
 
+  expose :images do |object|
+    images = []
+    images.push({
+      "id": 116838,
+      "thumb_url": "https://chuannhadat-assets.sgp1.digitaloceanspaces.com/product-images/11868/Bán-Nhà-mặt-phố-Đường-Trần-Quang-Khải-Quận-1--Diện-tích-64m2_d3d7b8_thumb.jpg",
+      "original_url": "https://chuannhadat-assets.sgp1.digitaloceanspaces.com/product-images/11868/Bán-Nhà-mặt-phố-Đường-Trần-Quang-Khải-Quận-1--Diện-tích-64m2_d3d7b8_big.jpg"
+    })
+    images
+    
+  end
+
+  expose :images_count do |object|
+    1
+  end
+
   expose :description
 
   expose :detail_props do |object|

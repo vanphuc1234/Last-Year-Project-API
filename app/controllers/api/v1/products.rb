@@ -14,12 +14,13 @@ module API
         get '/list' do
           ids = params[:product_ids].to_s.split(',')
           products = Product.where(id: ids).paginate(page: page, per_page: per_page).order(order_by_hash)
+          new_products = products.map{|product| SearchEntity.new(product) }
           data = {
             total_count: products.total_entries,
             total_pages: products.total_pages,
             page: products.current_page,
             per_page: products.per_page,
-            results: products
+            results: new_products
           }
 
           {status: true, code: 200, data: data}
@@ -188,12 +189,12 @@ module API
         # presenters (decorators) x
         # serialize (marshal) | deserialize (unmarshal) v (entity = serializer) x
         get ":id" do
-          product = Product.find(params[:id])
+          product = Product.find_by(id: params[:id])
         
           if product.present?
             { status: true, code: 200, data: ProductEntity.new(product)}
           else
-            { status: false, code: 404, message: product.errors.full_messages.to_sentence}
+            { status: false, code: 404, message: 'Không tìm thấy dữ liệu'}
           end
 
           
