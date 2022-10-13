@@ -9,7 +9,15 @@ module API
         end
         
         get :autocompletes do
-          Product.where("title like ?", "%#{params[:keyword]}%").limit(10)
+          if(params[:keyword] != " ")
+            products = Product.where("title like ?", "%#{params[:keyword]}%")
+          end
+          if products.present?
+            new_products = products.map{|product| SearchEntity.new(product)}
+            { status: true, code: 200, data: new_products}
+          else
+            { status: false, code: 404, message: 'No data'}
+          end
         end
         
         desc 'Danh sách sản phẩm'
@@ -92,7 +100,7 @@ module API
           if products.present?
             { status: true, code: 200, data: data}
           else
-            { status: false, code: 404, message: products.errors.full_messages.to_sentence}
+            { status: false, code: 404, message: 'No data'}
           end
 
 
