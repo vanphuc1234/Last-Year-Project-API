@@ -6,7 +6,17 @@ class ProductPresenter < BasePresenter
 
   CATEGORY_TYPES = {
     nha_rieng: 'Nhà riêng', 
-    can_ho_chung_cu: "Căn hộ chung cư"
+    can_ho_chung_cu: "Căn hộ chung cư",
+    nha_mat_pho: "Nhà mặt phố",
+    biet_thu_lien_ke:"Biệt thự liền kề",
+    dat_nen_du_an:"Đất nền dự án",
+    dat: "Đất",
+    trang_trai_khu_nghi_duong:"Trang trại, khu nghỉ dưỡng",
+    nha_tro_phong_tro:"Nhà trọ, phòng trọ",
+    van_phong:"Văn phòng",
+    cua_hang_kiot:"Cửa hàng, ki-ốt",
+    kho_nha_xuong:"Kho, nhà xưởng",
+    bat_dong_san_khac:"Bất động sản khác"
   }.with_indifferent_access
 
   def formatted_category_type
