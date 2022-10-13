@@ -169,20 +169,21 @@ module API
 
           products = products.paginate(page: params[:page], per_page: params[:per_page]).order(order_by_hash)
           
-          new_products = products.map{|product| SearchEntity.new(product) }
-          data = {
-            total_count: products.total_entries,
-            total_pages: products.total_pages,
-            page: products.current_page,
-            per_page: products.per_page,
-            results: new_products,
-            aggs: Product.fake_aggs
-          }
+          
           
           if products.present?
+            new_products = products.map{|product| SearchEntity.new(product) }
+            data = {
+              total_count: products.total_entries,
+              total_pages: products.total_pages,
+              page: products.current_page,
+              per_page: products.per_page,
+              results: new_products,
+              aggs: Product.fake_aggs
+            }
             { status: true, code: 200, data: data}
           else
-            { status: false, code: 404, message: products.errors.full_messages.to_sentence}
+            { status: false, code: 404, message: 'No data'}
           end
 
 
