@@ -75,13 +75,16 @@ module API
           requires :password, type: String, description: 'Password'
         end
 
-        post :login do
+        get do
+          if(!params[:password].present? || !params[:username].present?)
+            return {status: false, code: 400, error: "Chưa nhập username hoặc password"}          
+          end
           password = Digest::MD5.hexdigest(params[:password])
           user = User.find_by(username: params[:username], password: password)
           if user.present?
-            { status: true, code: 200,  user: user }
+            { status: true, code: 200,  data: ProfileEntity.new(user), api_token: user.api_token }
           else
-            { status: false, code: 400, message: "Username hoặc password không đúng." }
+            { status: false, code: 400, error: "Username hoặc password không đúng." }
           end
         end
 
