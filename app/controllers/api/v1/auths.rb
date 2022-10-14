@@ -15,7 +15,7 @@ module API
           # 1. username phải là duy nhất
           # 2. password phải dài hơn 6 kí tự
           if (params[:password].to_s.length < 6) 
-            return { status: false, message: "Password phải hơn 6 kí tự" }
+            return { status: false, error: "Password phải hơn 6 kí tự" }
           end
 
           password = Digest::MD5.hexdigest(params[:password])
@@ -26,9 +26,9 @@ module API
           )
 
           if user.valid?
-            { status: true, code:200, data: user }
+            { status: true, code:200,data: ProfileEntity.new(user), api_token: user.api_token, error: "Đăng ký thành công" }
           else
-            { status: false, code:400, message: user.errors.full_messages.to_sentence}
+            { status: false, code:400, error: user.errors.full_messages.to_sentence}
           end
         end
 
