@@ -63,7 +63,7 @@ module API
               description: params[:description],
               address: params[:address],
             )
-            return { status: true, code: 200, data: ProfileEntity.new(user)}
+            return { status: true, code: 200, data: ProfileEntity.new(user), message: "Cập nhật thành công"}
           else
             return { status: false, code: 404, message: "User không tồn tại"}
           end

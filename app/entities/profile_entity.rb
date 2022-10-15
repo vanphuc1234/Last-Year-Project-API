@@ -9,7 +9,8 @@ class ProfileEntity < Grape::Entity
   expose :avatar_url
   expose :job_title
   expose :phone
-  expose :profile_tag do |object|
+  expose :sex
+  expose :profile_tags do |object|
     ProfilePresenter.new(object).profile_tag
   end
   expose :posts_count do |object|
