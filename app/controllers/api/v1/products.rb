@@ -126,7 +126,7 @@ module API
           if(user.present?)
             product = Product.find(params[:id])
 
-            if(product.valid?)
+            if(product.present?)
               product.update(
                 title: params[:title],
                 description: params[:description],
@@ -165,18 +165,15 @@ module API
                    
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)
-           product = Product.find(params[:id])
-           if(product.valid?)
+           product = Product.find_by(id: params[:id])
+           if(product.present?)
             product.destroy
             return { status: true, code: 200, message: "Xóa product thành công"}
            else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
            end
           else return { status: false, code: 400, message: "Người dùng không tồn tại"}
-          end
-
-          
-          
-          
+          end       
+                    
         end
 
 
@@ -196,8 +193,31 @@ module API
           else
             { status: false, code: 404, message: 'Không tìm thấy dữ liệu'}
           end
+        end
 
-          
+        desc 'Xem chi tiết sản phẩm không dùng entity' do 
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          requires :id, type: String, description: 'id sản phẩm'
+        end
+
+        # services modules
+        # helpers x
+        # presenters (decorators) x
+        # serialize (marshal) | deserialize (unmarshal) v (entity = serializer) x
+        get do
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+            product = Product.find_by(id: params[:id])
+        
+            if product.present?
+              return { status: true, code: 200, data: product}
+            else
+              return { status: false, code: 404, message: 'Không tìm thấy dữ liệu'}
+            end
+          else return { status: false, code: 404, message: "User không tồn tại"}
+          end
         end
 
 

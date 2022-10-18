@@ -11,7 +11,7 @@ class Product < ApplicationRecord
         description: Faker::Address.full_address, 
         price: rand(1000000..100000000000),
         area: rand(20..250),
-        direction: ['huong_dong', 'huong_tay'].sample,
+        direction: ['Hướng Đông', 'Hướng Tây','Hướng Nam', 'Hướng Bắc','Hướng Đông Nam', 'Hướng Tây Nam','Hướng Đông Bắc', 'Hướng Tây Bắc'].sample,
         beds_count: rand(1..10),
         baths_count: rand(1..10),
         city: "Hồ Chí Minh",

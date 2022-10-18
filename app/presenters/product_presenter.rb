@@ -134,6 +134,11 @@ class ProductPresenter < BasePresenter
       }
       detail_props.push(dia_chi)
     end
+    huong = {
+      "label": "Hướng",
+      "value": direction
+    }
+    detail_props.push(huong)
     detail_props   
   end
 
