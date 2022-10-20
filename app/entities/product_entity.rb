@@ -21,7 +21,11 @@ class ProductEntity < Grape::Entity
   end
 
   expose :full_address do |object|
-    ProductPresenter.new(object).full_address
+    full_address = ProductPresenter.new(object).full_address
+    if(full_address == "")
+      nil
+    else full_address
+    end
   end
 
   expose :business_type do |object|

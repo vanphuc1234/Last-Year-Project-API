@@ -102,7 +102,7 @@ module API
           headers API::V1::Helpers::APIHelpers.user_auth
         end
         params do
-          requires :id, type: Integer, description: 'Product id'
+          # requires :id, type: Integer, description: 'Product id'
           optional :title, type: String, description: 'Tiêu đề'
           optional :description, type: String, description: 'Mô tả'
           optional :business_type, type: String, description: 'Loại giao dịch'
@@ -144,7 +144,7 @@ module API
                 facade: params[:facade],
                 floor_count: params[:floor_count]
               )
-               return { status: true, code: 200, data: ProductEntity.new(product)}
+               return { status: true, code: 200, data: product}
             else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
             end
 
