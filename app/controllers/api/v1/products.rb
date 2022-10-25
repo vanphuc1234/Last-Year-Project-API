@@ -36,13 +36,7 @@ module API
         post '/upload_image' do
           product_image = ProductImage.new(photo: params[:file]['tempfile'])
           product_image.save
-          response = {
-            id: product_image.id,
-            url: "http://localhost:3000#{product_image.photo.url}",
-            thumb_url: "http://localhost:3000#{product_image.photo.thumb.url}"
-          }
-
-          { status: true, code: 200, data: response}
+          { status: true, code: 200, data: ProductImageEntity.new(product_image)}
         end
 
         # desc 'Danh sách sản phẩm'
