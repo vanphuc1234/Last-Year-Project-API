@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 2022_10_25_153533) do
   end
 
   create_table "product_images", force: :cascade do |t|
+    t.integer "product_id"
     t.string "photo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_product_images_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|

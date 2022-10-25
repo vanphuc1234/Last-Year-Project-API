@@ -87,7 +87,7 @@ module API
           optional :baths_count, type: Integer, description: 'Số nhà tắm'
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
-        
+          optional :product_image_ids, type: String, description: 'Danh sách hình, ex: 1,2,3'
         end
 
         post do                     
@@ -95,22 +95,28 @@ module API
           if(user.present?)
             product = Product.create(
               title: params[:title],
-                description: params[:description],
-                price: params[:price],
-                area: params[:area],
-                business_type: params[:business_type],
-                category_type: params[:category_type],
-                city: params[:city],
-                district: params[:district],
-                ward: params[:ward],
-                street: params[:street],
-                direction: params[:direction],
-                beds_count: params[:beds_count],
-                baths_count: params[:baths_count],
-                facade: params[:facade],
-                floor_count: params[:floor_count],
+              description: params[:description],
+              price: params[:price],
+              area: params[:area],
+              business_type: params[:business_type],
+              category_type: params[:category_type],
+              city: params[:city],
+              district: params[:district],
+              ward: params[:ward],
+              street: params[:street],
+              direction: params[:direction],
+              beds_count: params[:beds_count],
+              baths_count: params[:baths_count],
+              facade: params[:facade],
+              floor_count: params[:floor_count],
               user_id: user.id
             )
+            if product.valid? && params[:product_image_ids].present?
+              product.product_images.update_all(product_id: nil)
+              image_ids = params[:product_image_ids].split(',')
+              images = ProductImage.where(id: image_ids)
+              images.update_all(product_id: product.id)
+            end
             return { status: true, code: 200, data: ProductEntity.new(product)}
           else
             return { status: false, code: 404, message: "User không tồn tại"}
