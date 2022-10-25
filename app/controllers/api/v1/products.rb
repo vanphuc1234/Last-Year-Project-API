@@ -143,6 +143,7 @@ module API
           optional :baths_count, type: Integer, description: 'Số nhà tắm'
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
+          optional :product_image_ids, type: String, description: 'Danh sách hình, ex: 1,2,3'
           
         end
 
@@ -152,7 +153,7 @@ module API
             product = Product.find(params[:id])
 
             if(product.present?)
-              product.update(
+              is_valid = product.update(
                 title: params[:title],
                 description: params[:description],
                 price: params[:price],
@@ -169,7 +170,15 @@ module API
                 facade: params[:facade],
                 floor_count: params[:floor_count]
               )
-               return { status: true, code: 200, data: product}
+
+              if is_valid 
+                product.product_images.update_all(product_id: nil)
+                image_ids = params[:product_image_ids].to_s.split(',')
+                images = ProductImage.where(id: image_ids)
+                images.update_all(product_id: product.id)
+              end
+
+              return { status: true, code: 200, data: ProductEntity.new(product)}
             else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
             end
 
