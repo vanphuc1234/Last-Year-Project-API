@@ -49,6 +49,26 @@ module API
         #   {status: true, code: 200, data: data}
         # end
 
+        desc 'Up hình' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          optional :file, type: File, description: 'File'
+        end
+
+        post '/upload_image' do
+          product_image = ProductImage.create
+          product_image.image.attach(io: params[:file]['tempfile'], filename: params[:file][:filename])
+          product_image.save
+          product_image = ProductImage.find(product_image.id)
+          response = {
+            id: product_image.id,
+            url: product_image.image.url
+          }
+          
+          { status: true, code: 200, data: response}
+        end
+
         desc 'Đăng sản phẩm' do
           headers API::V1::Helpers::APIHelpers.user_auth
         end
@@ -68,7 +88,7 @@ module API
           optional :baths_count, type: Integer, description: 'Số nhà tắm'
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
-        
+          optional :product_image_ids, type: String, description: 'Image ids ex: 1,2,3'
         end
 
         post do                     
