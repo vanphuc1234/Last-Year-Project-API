@@ -197,8 +197,11 @@ module API
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)
            product = Product.find_by(id: params[:id])
+           product_image_ids = ProductImage.where(id: product.product_image_ids.split(","))
            if(product.present?)
             product.destroy
+            product_image_ids.destroy_all
+          
             return { status: true, code: 200, message: "Xóa product thành công"}
            else return { status: false, code: 400, message: "Sản phảm không tồn tại"}
            end
