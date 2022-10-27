@@ -37,18 +37,13 @@ class ProductEntity < Grape::Entity
   end
 
   expose :images do |object|
-    images = []
-    images.push({
-      "id": 116838,
-      "thumb_url": "https://chuannhadat-assets.sgp1.digitaloceanspaces.com/product-images/11868/Bán-Nhà-mặt-phố-Đường-Trần-Quang-Khải-Quận-1--Diện-tích-64m2_d3d7b8_thumb.jpg",
-      "original_url": "https://chuannhadat-assets.sgp1.digitaloceanspaces.com/product-images/11868/Bán-Nhà-mặt-phố-Đường-Trần-Quang-Khải-Quận-1--Diện-tích-64m2_d3d7b8_big.jpg"
-    })
-    images
-    
+    object.product_images.map do |product_image|
+      ProductImageEntity.new(product_image)
+    end
   end
 
   expose :images_count do |object|
-    1
+    object.product_images.count
   end
 
   expose :description

@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :user
+  has_many :product_images
   
   def self.generate_data
     50.times do |index|

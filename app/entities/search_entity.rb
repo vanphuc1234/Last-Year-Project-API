@@ -23,7 +23,7 @@ class SearchEntity < Grape::Entity
   end
 
   expose :image_url do |object|
-    "https://bds-static-2.b-cdn.net/resize/624x476/2022/07/17/20220717182938-719c_wm.jpg?width=230&height=140&func=crop"
+    object.product_images.first.try(:thumb_url)
   end
 
   expose :listing_location_name do |object|
@@ -35,7 +35,7 @@ class SearchEntity < Grape::Entity
   end 
 
   expose :images_count do |object|
-    2
+    object.product_images.count
   end
 
   expose :formatted_publish_at do |object|
