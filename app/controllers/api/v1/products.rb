@@ -34,9 +34,12 @@ module API
         end
 
         post '/upload_image' do
-          product_image = ProductImage.new(photo: params[:file]['tempfile'])
+          product_image = ProductImage.new(photo: params[:file])
           product_image.save
-          { status: true, code: 200, data: ProductImageEntity.new(product_image)}
+          if(product_image.valid?)
+           return { status: true, code: 200, data: ProductImageEntity.new(product_image) }
+          else return { status: false, code: 400, error: product_image.errors.full_messages.to_sentence}
+          end
         end
 
         # desc 'Danh sách sản phẩm'

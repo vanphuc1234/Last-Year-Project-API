@@ -2,7 +2,7 @@ class ProductImage < ApplicationRecord
   mount_uploader :photo, ProductImageUploader
 
   def image_host
-    "http://localhost:3000"
+    "http://10.0.2.2:3000"
   end
 
   def thumb_url
