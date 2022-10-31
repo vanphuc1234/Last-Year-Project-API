@@ -16,7 +16,7 @@ module API
           if(user.present?)
             user.update(avatar: params[:file])
             user.save
-            return { status: true, code: 200, data: ProfileEntity.new(user) }
+            return { status: true, code: 200, message: "Cập nhật ảnh đại diện thành công", data: ProfileEntity.new(user) }
           else return { status: false, code: 400, error: "User không tồn tại"}
           end
             
