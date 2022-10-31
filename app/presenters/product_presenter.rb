@@ -53,9 +53,20 @@ class ProductPresenter < BasePresenter
 
   def formatted_price_per_m2
     if price != nil && area != nil
-    price_per_m2 = (price/1000)/area
+    price_per_area = price/area
 
-    "#{price_per_m2.round(1)} nghìn/m2"
+      if (price_per_area >= 1000000 && price_per_area < 1000000000 ) 
+        price_per_m2 = (price_per_area / 1000000).round(1)
+        "#{price_per_m2.round(1)} triệu/m2"
+      elsif (price_per_area < 1000000)
+        price_per_m2 = (price_per_area / 1000).round(1)
+        "#{price_per_m2.round(1)} nghìn/m2"
+      elsif (price_per_area >= 1000000000)
+        price_per_m2 = (price_per_area / 1000000000).round(1)
+        "#{price_per_m2.round(1)} tỷ/m2"
+      else
+      "#{price_per_area} đồng/m2"
+      end
     end
   end
 
