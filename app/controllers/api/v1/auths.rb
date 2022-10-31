@@ -4,6 +4,24 @@ module API
       helpers API::V1::Helpers::APIHelpers
 
       resource :auths do
+        desc 'Update hình đại diện' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          optional :file, type: File, description: 'File'
+        end
+
+        put '/update_avatar' do
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)
+            user.update(avatar: params[:file])
+            user.save
+            return { status: true, code: 200, data: ProfileEntity.new(user) }
+          else return { status: false, code: 400, error: "User không tồn tại"}
+          end
+            
+        end
+
         desc 'Đăng kí tài khoản'
         params do
           optional :full_name, type: String, description: 'Full name'

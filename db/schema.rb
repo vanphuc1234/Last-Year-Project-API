@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_25_153533) do
+ActiveRecord::Schema.define(version: 2022_10_31_031034) do
 
   create_table "authors", force: :cascade do |t|
     t.string "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2022_10_25_153533) do
     t.string "description"
     t.string "address"
     t.string "type_user"
+    t.string "avatar"
     t.index ["api_token"], name: "index_users_on_api_token"
     t.index ["username", "password"], name: "index_users_on_username_and_password"
   end
