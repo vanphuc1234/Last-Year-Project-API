@@ -12,21 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2022_10_31_031034) do
 
-  create_table "authors", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "books", force: :cascade do |t|
-    t.integer "author_id"
-    t.datetime "published_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "book_name"
-    t.index ["author_id"], name: "index_books_on_author_id"
-  end
-
   create_table "product_images", force: :cascade do |t|
     t.integer "product_id"
     t.string "photo"
