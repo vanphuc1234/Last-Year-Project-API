@@ -106,9 +106,27 @@ module API
           end
         end
 
+        desc 'Check user'
+        params do
+          requires :username, type: String, description: 'Username'
+        end
+
+        get :check_user do
+          user = User.find_by(username: params[:username])
+          if user.present?
+             data = {
+              name: user.full_name
+              }
+            { status: true, code: 200, data:data }
+          else
+            { status: false, code: 400, error: "Chưa đăng ký tài khoản" }
+          end
+        end
+
         desc 'Thông tin của user đang đăng nhập' do
           headers API::V1::Helpers::APIHelpers.user_auth
         end
+        
 
         get :me do
           user = User.find_by(api_token: headers['Authorization'])
