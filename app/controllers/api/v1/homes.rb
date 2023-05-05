@@ -58,8 +58,12 @@ module API
           desc 'Top môi giới' do
           end
           params do
+          optional :business_type, type: String, values: ['rent', 'sell'], default: 'sell'
           end
-          get :top_moi_gioi do              
+          get :top_moi_gioi do
+            results = User.joins(:products).where('business_type == :business_type', {business_type: params[:business_type]}).group(:user_id).order('COUNT(user_id) DESC')   
+            entity = results.map{|user| ProfileEntity.new(user)}
+            entity
           end
         end
   
