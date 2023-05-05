@@ -49,7 +49,7 @@ module API
               "name": "TopMoiGioiRent",
             }
           ]
-          {banner: banner, main_features: main_features, balance: balance, secondary_features: secondary_features }
+          {banners: banner, main_features: main_features, balance: balance, secondary_features: secondary_features }
           end
       
           
