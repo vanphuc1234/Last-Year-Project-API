@@ -2,7 +2,6 @@ module API
   module V1
     class Auths < Grape::API
       helpers API::V1::Helpers::APIHelpers
-
       resource :auths do
         desc 'Update hình đại diện' do
           headers API::V1::Helpers::APIHelpers.user_auth
@@ -211,6 +210,7 @@ module API
           
           
           if products.present?
+            user = User.find_by(id: user_id_slug)
             new_products = products.map{|product| SearchEntity.new(product) }
             data = {
               total_count: products.total_entries,
@@ -220,7 +220,7 @@ module API
               results: new_products,
               aggs: Product.fake_aggs
             }
-            { status: true, code: 200, data: data}
+            { status: true, code: 200, data: data, user_info: ProfileEntity.new(user)}
           else
             { status: false, code: 404, message: 'No data'}
           end
