@@ -222,7 +222,15 @@ module API
             }
             { status: true, code: 200, data: data, user_info: ProfileEntity.new(user)}
           else
-            { status: false, code: 404, message: 'No data'}
+            data = {
+              total_count: 0,
+              total_pages: 1,
+              page: 1,
+              per_page: 15,
+              results: [],
+              aggs: Product.fake_aggs
+            }
+            { status: true, code: 200, data: data, user_info: ProfileEntity.new(user)}
           end
 
 
