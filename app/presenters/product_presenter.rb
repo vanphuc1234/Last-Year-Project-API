@@ -153,5 +153,37 @@ class ProductPresenter < BasePresenter
     detail_props   
   end
 
+  def formatted_sizes
+    if(area != nil && facade != nil)
+      long = area / facade
+      if(long > facade)
+        "#{long}/#{facade} m "
+      else
+        "#{facade}/#{long} m "
+      end
+    else
+      "-"
+    end
+    
+  end
+
+  def formatted_publish_at
+    now = DateTime.now
+    diff = now.to_i - created_at.to_datetime.to_i
+    if(diff >= 0 && diff < 60)
+      "#{diff} giây"  
+    elsif(diff >= 60 && diff < 3600)
+      "#{diff / 60} phút"  
+    elsif(diff >= 3600 && diff < 86400)
+      "#{diff / 3600} giờ" 
+    elsif(diff >= 86400 && diff < 2592000)
+      "#{diff / 86400} ngày" 
+    elsif(diff >= 2592999 && diff < 31536000)
+      "#{diff / 2592999} tháng" 
+    else
+      "#{diff / 31536000} năm" 
+    end     
+  end
+
 
 end

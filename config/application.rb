@@ -13,6 +13,8 @@ module LastYearProjectApi
 
     config.api_only = true
 
+    config.time_zone = 'Hanoi'
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
