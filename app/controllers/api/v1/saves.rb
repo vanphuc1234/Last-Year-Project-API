@@ -85,6 +85,26 @@ module API
             
           end
 
+          desc 'Get ids saved' do
+            headers API::V1::Helpers::APIHelpers.user_auth
+          end
+          params do
+          end
+          get '/saved_ids' do
+            user = User.find_by(api_token: headers['Authorization'])
+            products = Product.all
+            if(user.present?)
+              saveds = Save.where(user_id: user.id)
+              ids = saveds.map{|saved| saved.product.id}
+
+             
+              return { status: true, code: 200, data: ids}
+            else 
+              return { status: false, code: 400, message: "Người dùng không tồn tại"}
+            end
+            
+          end
+
 
         end
   
