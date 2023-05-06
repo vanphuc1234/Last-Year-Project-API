@@ -49,6 +49,43 @@ module API
             end
             
           end
+
+
+          desc 'Get products saved' do
+            headers API::V1::Helpers::APIHelpers.user_auth
+          end
+          params do
+            optional :page, type: Integer, description: 'Số trang'
+            optional :per_page, type: Integer, description: 'Số dòng trên trang', default: 15
+          end
+          get do
+            user = User.find_by(api_token: headers['Authorization'])
+            products = Product.all
+            if(user.present?)
+              saveds = Save.where(user_id: user.id)
+              ids = saveds.map{|saved| saved.product.id}
+
+              products = products.where(id: ids)
+              
+              products = products.paginate(page: params[:page], per_page: params[:per_page])
+              
+              saved_products_entity = products.map{|product| SearchEntity.new(product)}
+
+              data = {
+                total_count: products.total_entries,
+                total_pages: products.total_pages,
+                page: products.current_page,
+                per_page: products.per_page,
+                results: saved_products_entity,
+              }
+              return { status: true, code: 200, data: data}
+            else 
+              return { status: false, code: 400, message: "Người dùng không tồn tại"}
+            end
+            
+          end
+
+
         end
   
       end

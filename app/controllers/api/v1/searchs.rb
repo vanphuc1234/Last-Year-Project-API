@@ -52,7 +52,7 @@ module API
           optional :beds_count, type: Integer
           optional :baths_count, type: Integer
           optional :page, type: Integer, description: 'Số trang'
-          optional :per_page, type: Integer, description: 'Số dòng trên trang'
+          optional :per_page, type: Integer, description: 'Số dòng trên trang', default: 15
           optional :sort_by, type: String, values: ['id']
           optional :sort_order, type: String, values: ['asc', 'desc']
         end
