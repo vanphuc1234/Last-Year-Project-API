@@ -95,6 +95,10 @@ GEM
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     ffi (1.15.5-x64-mingw32)
+    geokit (1.14.0)
+    geokit-rails (2.5.0)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     grape (1.6.2)
@@ -214,6 +218,7 @@ DEPENDENCIES
   byebug
   carrierwave (~> 2.0)
   faker
+  geokit-rails
   grape
   grape-entity
   grape-swagger
