@@ -20,9 +20,9 @@ module API
                         save = Save.create(
                             user: user,
                             product: product
-                        )
-                        saved_ids = Save.where(user_id: user.id).map{|save| save.product.id}
+                        )                        
                     end
+                    saved_ids = Save.where(user_id: user.id).map{|save| save.product.id}
                     data = {
                         "product_id": params[:product_id],
                         "saved_ids": saved_ids
