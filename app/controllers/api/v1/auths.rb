@@ -208,9 +208,8 @@ module API
           products = products.paginate(page: params[:page], per_page: params[:per_page]).order(order_by_hash)
           
           
-          
-          if products.present?
-            user = User.find_by(id: user_id_slug)
+          user = User.find_by(id: user_id_slug)
+          if products.present?            
             new_products = products.map{|product| SearchEntity.new(product) }
             data = {
               total_count: products.total_entries,
