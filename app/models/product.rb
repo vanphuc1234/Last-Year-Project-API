@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   belongs_to :user
   has_many :product_images
   acts_as_mappable :lat_column_name => :lat,
-                   :lng_column_name => :lng
+                   :lng_column_name => :lon
   
   
   def self.generate_data
@@ -23,9 +23,9 @@ class Product < ApplicationRecord
         ward: "Phường Hiệp Thành",
         street: "Đường HT13",
         facade: rand(1..100),
-        floor_count: rand(1..5)
-        
-
+        floor_count: rand(1..5),
+        lat: 10.881040,
+        lon: 106.638460
       )
     end
   end
