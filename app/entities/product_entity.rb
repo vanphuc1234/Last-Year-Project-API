@@ -48,6 +48,10 @@ class ProductEntity < Grape::Entity
 
   expose :description
 
+  expose :ll do |object|
+    ProductPresenter.new(object).ll
+  end
+
   expose :detail_props do |object|
     ProductPresenter.new(object).detail_props
   end
