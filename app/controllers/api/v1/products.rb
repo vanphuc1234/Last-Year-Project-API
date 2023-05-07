@@ -176,7 +176,7 @@ module API
                 lon: params[:lon]
               )
 
-              if is_valid 
+              if is_valid && params[:product_image_ids].present?
                 product.product_images.update_all(product_id: nil)
                 image_ids = params[:product_image_ids].to_s.split(',')
                 images = ProductImage.where(id: image_ids)

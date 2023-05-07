@@ -108,7 +108,7 @@ class ProductPresenter < BasePresenter
     if(title != nil)
       title.parameterize
     else
-      "#{business_type.parameterize} #{category_type.parameterize}"
+      "#{business_type} #{category_type}"
     end
   end 
 
