@@ -85,6 +85,8 @@ module API
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
           optional :product_image_ids, type: String, description: 'Danh sách hình, ex: 1,2,3'
+          optional :lat, type: Float, description: 'latitude'
+          optional :lon, type: Float, description: 'longitude'
         end
 
         post do                     
@@ -106,6 +108,8 @@ module API
               baths_count: params[:baths_count],
               facade: params[:facade],
               floor_count: params[:floor_count],
+              lat: params[:lat],
+              lon: params[:lon],
               user_id: user.id
             )
             if product.valid? && params[:product_image_ids].present?
@@ -141,6 +145,8 @@ module API
           optional :facade, type: Integer, description: 'Mặt tiền'
           optional :floor_count, type: Integer, description: 'Số tầng'
           optional :product_image_ids, type: String, description: 'Danh sách hình, ex: 1,2,3'
+          optional :lat, type: Float, description: 'latitude'
+          optional :lon, type: Float, description: 'longitude'
           
         end
 
@@ -165,7 +171,9 @@ module API
                 beds_count: params[:beds_count],
                 baths_count: params[:baths_count],
                 facade: params[:facade],
-                floor_count: params[:floor_count]
+                floor_count: params[:floor_count],
+                lat: params[:lat],
+                lon: params[:lon]
               )
 
               if is_valid 

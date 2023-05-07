@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_05_085036) do
+ActiveRecord::Schema.define(version: 2023_05_07_074743) do
 
   create_table "product_images", force: :cascade do |t|
     t.integer "product_id"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2023_05_05_085036) do
     t.integer "floor_count"
     t.string "image_url"
     t.integer "images_count"
+    t.float "lat"
+    t.float "lon"
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
