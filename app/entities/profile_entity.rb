@@ -22,7 +22,7 @@ class ProfileEntity < Grape::Entity
     nil
   end 
   expose :formatted_joined_at do |object|
-    "Đã tham gia hơn 1 tháng trước"
+    ProfilePresenter.new(object).formatted_publish_at
   end 
   
 end
