@@ -175,19 +175,22 @@ module API
             products = products.where('baths_count = :baths_count', {baths_count: params[:baths_count]})
           end
 
-          products = products.in_bounds(client_view_bounds)         
-          
-          new_products = products.map{|product| SearchEntity.new(product)}          
-          
-          if products.present?
-            { total_count: products.count, results: new_products}
+          if(params[:bounds].present?)
+            products = products.in_bounds(client_view_bounds)    
+            
+            new_products = products.map{|product| MapEntity.new(product)}  
+            if products.present?
+              { total_count: products.count, results: new_products}
+            else
+              { total_count: 0, results: []}
+            end
           else
             { total_count: 0, results: []}
-          end
+          end  
         end
 
+        
       end
-
     end
   end
 end

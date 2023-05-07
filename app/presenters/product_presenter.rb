@@ -185,5 +185,9 @@ class ProductPresenter < BasePresenter
     end     
   end
 
+  def ll
+    [lat, lon]
+  end
+
 
 end
