@@ -107,6 +107,8 @@ class ProductPresenter < BasePresenter
   def slug 
     if(title != nil)
       title.parameterize
+    else
+      "#{business_type.parameterize} #{category_type.parameterize}"
     end
   end 
 
