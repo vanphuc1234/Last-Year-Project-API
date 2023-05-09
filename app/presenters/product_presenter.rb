@@ -140,6 +140,7 @@ class ProductPresenter < BasePresenter
       }
       detail_props.push(loai_tin_dang)
     end
+
     if(street != nil || ward != nil || district != nil || city != nil)
       dia_chi = {
        "label": "Địa chỉ",
@@ -147,6 +148,39 @@ class ProductPresenter < BasePresenter
       }
       detail_props.push(dia_chi)
     end
+    
+    if(facade != nil)
+      mat_tien = {
+        "label": "Mặt tiền",
+        "value": facade
+      }
+      detail_props.push(mat_tien)
+    end
+    
+    if(floor_count != nil)
+      so_tang = {
+        "label": "Số tầng",
+        "value": floor_count
+      }
+      detail_props.push(so_tang)
+    end
+
+    if(beds_count != nil)
+      phong_ngu = {
+        "label": "Số phòng ngủ",
+        "value": beds_count
+      }
+      detail_props.push(phong_ngu)
+    end
+
+    if(baths_count != nil)
+      phong_tam = {
+        "label": "Số nhà vệ sinh",
+        "value": baths_count
+      }
+      detail_props.push(phong_tam)
+    end
+
     huong = {
       "label": "Hướng",
       "value": direction
