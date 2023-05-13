@@ -115,7 +115,15 @@ module API
           if products.present?
             { status: true, code: 200, data: data}
           else
-            { status: false, code: 404, message: 'No data'}
+            data = {
+              total_count: 0,
+              total_pages: 1,
+              page: 1,
+              per_page: 15,
+              results: [],
+              aggs: Product.fake_aggs
+            }
+            { status: false, code: 404,data: data, message: 'No data'}
           end
         end
 

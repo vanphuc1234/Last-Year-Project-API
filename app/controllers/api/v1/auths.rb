@@ -118,7 +118,7 @@ module API
               }
             { status: true, code: 200, data:data }
           else
-            { status: false, code: 400, error: "Chưa đăng ký tài khoản" }
+            { status: false, code: 401, message: "Chưa đăng ký tài khoản" }
           end
         end
 
