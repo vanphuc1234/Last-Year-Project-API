@@ -10,7 +10,7 @@ module API
 
           banner = [
             {
-              "image_url": "https://via.placeholder.com/320x200?text=popup_static_content",
+              "image_url": "https://i.imgur.com/MobxNWF.jpg",
               "action_type": "popup_static_content",
               "options": {
                 "str_rows": [

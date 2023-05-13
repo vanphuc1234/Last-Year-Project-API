@@ -231,12 +231,41 @@ module API
             }
             { status: true, code: 200, data: data, user_info: ProfileEntity.new(user)}
           end
+        end
 
+        desc 'Cập nhật mật khẩu' do
+          headers API::V1::Helpers::APIHelpers.user_auth
+        end
+        params do
+          requires :current_password, type: String, description: 'Password'
+          requires :check_password, type: String, description: 'Password'
+          requires :new_password, type: String, description: 'Password'
+        end
+  
+        put :update_password do    
+          current_password = Digest::MD5.hexdigest(params[:current_password])
+          check_password = Digest::MD5.hexdigest(params[:check_password])
+          new_password = Digest::MD5.hexdigest(params[:new_password])
+          if(new_password != check_password)
+            return {status: false, code: 404, message: "Mật khẩu nhập lại không trùng khớp"}
+          end
 
+          user = User.find_by(api_token: headers['Authorization'])
+          if(user.present?)  
+            if(current_password != user.password)
+              return {status: false, code: 404, message: "Mật khẩu cũ không trùng khớp"}
+            else
+              user.update(
+                password: new_password, 
+              )
+              return { status: true, code: 200,  message: "Cập nhật mật khẩu thành công"}
+            end
+          else
+            return { status: false, code: 404, message: "User không tồn tại"}
+          end
         end
 
       end
-
     end
   end
 end
