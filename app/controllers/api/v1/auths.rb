@@ -101,7 +101,7 @@ module API
           if user.present?
             { status: true, code: 200,  data: ProfileEntity.new(user), api_token: user.api_token }
           else
-            { status: false, code: 400, error: "Username hoặc password không đúng." }
+            { status: false, code: 400, error: "Mật khẩu không chính xác" }
           end
         end
 
@@ -118,7 +118,7 @@ module API
               }
             { status: true, code: 200, data:data }
           else
-            { status: false, code: 401, message: "Chưa đăng ký tài khoản" }
+            { status: false, code: 401, message: "Tài khoản chưa được đăng ký" }
           end
         end
 
