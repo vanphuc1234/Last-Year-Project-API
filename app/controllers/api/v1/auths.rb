@@ -76,6 +76,9 @@ module API
         end
 
         put do    
+          if(params[:full_name].to_s.length == 0)
+            return { status: false, code: 404, message: "Không được để trống họ và tên"}
+          end
           user = User.find_by(api_token: headers['Authorization'])
           if(user.present?)  
             user.update(
