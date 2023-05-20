@@ -26,6 +26,7 @@ module API
           optional :full_name, type: String, description: 'Full name'
           requires :username, type: String, description: 'Username'
           requires :password, type: String, description: 'Password'
+          requires :again_password, type: String, description: 'Password'
         end
 
         post :register do
@@ -33,6 +34,14 @@ module API
           # 2. password phải dài hơn 6 kí tự
           if (params[:password].to_s.length < 6) 
             return { status: false, error: "Password phải hơn 6 kí tự" }
+          end
+
+          if(params[:password] != params[:again_password])
+            return { status: false, error: "Nhập lại mật khẩu không chính xác" }
+          end
+
+          if(params[:username].to_s.length == 0)
+            return { status: false, error: "Chưa nhập tên đăng nhập" }
           end
 
           password = Digest::MD5.hexdigest(params[:password])
