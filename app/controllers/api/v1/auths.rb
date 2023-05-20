@@ -246,12 +246,21 @@ module API
           headers API::V1::Helpers::APIHelpers.user_auth
         end
         params do
-          requires :current_password, type: String, description: 'Password'
-          requires :check_password, type: String, description: 'Password'
-          requires :new_password, type: String, description: 'Password'
+          optional :current_password, type: String, description: 'Password'
+          optional :check_password, type: String, description: 'Password'
+          optional :new_password, type: String, description: 'Password'
         end
   
-        put :update_password do    
+        put "/update_password" do    
+          if(params[:current_password].to_s.length == 0)
+            return {status: false, code: 404, message: "Chưa nhập mật khẩu cũ"}
+          end
+          if(params[:check_password].to_s.length == 0 )
+            return {status: false, code: 404, message: "Chưa nhập lại mật khẩu mới"}
+          end
+          if(params[:new_password].to_s.length == 0 )
+            return {status: false, code: 404, message: "Chưa nhập mật khẩu mới"}
+          end
           current_password = Digest::MD5.hexdigest(params[:current_password])
           check_password = Digest::MD5.hexdigest(params[:check_password])
           new_password = Digest::MD5.hexdigest(params[:new_password])
