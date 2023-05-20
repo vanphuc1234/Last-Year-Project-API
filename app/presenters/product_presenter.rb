@@ -31,15 +31,35 @@ class ProductPresenter < BasePresenter
     if price != nil 
       if (price >= 1000000 && price < 1000000000 ) 
         ntrieu = (price / 1000000).round(1)
-        "#{ntrieu} triệu"
+        if(business_type == "rent")
+          "#{ntrieu} tr/tháng"
+        else 
+          "#{ntrieu} triệu"
+        end
+        
       elsif (price < 1000000)
         ntnghin = (price / 1000).round(1)
-        "#{ntnghin} nghìn"
+        if(business_type == "rent")
+          "#{ntnghin} k/tháng"
+        else 
+          "#{ntnghin} nghìn"
+        end
+
       elsif (price >= 1000000000)
         nty = (price / 1000000000).round(1)
-        "#{nty} tỷ"
+        if(business_type == "rent")
+          "#{nty} tỷ/tháng"
+        else 
+          "#{nty} tỷ"
+        end
+      
       else
-       "#{price} đồng"
+        if(business_type == "rent")
+          "#{price} đ/tháng"
+        else 
+          "#{price} đồng"
+        end
+     
       end
     end
     
@@ -52,7 +72,7 @@ class ProductPresenter < BasePresenter
   end
 
   def formatted_price_per_m2
-    if price != nil && area != nil
+    if price != nil && area != nil && business_type == "sell"
     price_per_area = price/area
 
       if (price_per_area >= 1000000 && price_per_area < 1000000000 ) 
@@ -191,12 +211,8 @@ class ProductPresenter < BasePresenter
 
   def formatted_sizes
     if(area != nil && facade != nil)
-      long = area / facade
-      if(long > facade)
-        "#{long}/#{facade} m "
-      else
-        "#{facade}/#{long} m "
-      end
+      long = (area / facade).round(1)
+      "#{facade} x #{long} m "
     else
       "-"
     end
